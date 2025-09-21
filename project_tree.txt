@@ -1,0 +1,146 @@
+.
+├── build
+│   ├── classes
+│   │   └── java
+│   │       └── main
+│   │           └── br
+│   │               └── com
+│   │                   └── gdev
+│   │                       └── spring_auth_server
+│   │                           ├── config
+│   │                           │   └── SecurityConfig.class
+│   │                           ├── controllers
+│   │                           │   ├── ClientController.class
+│   │                           │   └── UsersController.class
+│   │                           ├── infra
+│   │                           │   ├── dto
+│   │                           │   │   ├── ErrorFields.class
+│   │                           │   │   └── ErrorResponse.class
+│   │                           │   ├── exception
+│   │                           │   │   ├── ClientNotFoundExeption.class
+│   │                           │   │   └── UserNotFoundException.class
+│   │                           │   └── handler
+│   │                           │       └── ControllerAdviceHandler.class
+│   │                           ├── model
+│   │                           │   ├── dtos
+│   │                           │   │   ├── ClientCreatedResponseDTO.class
+│   │                           │   │   ├── ClientDTO.class
+│   │                           │   │   ├── ClientResponseDTO.class
+│   │                           │   │   ├── UserDTO.class
+│   │                           │   │   ├── UserGetResponseDTO.class
+│   │                           │   │   └── UserResponseDTO.class
+│   │                           │   ├── entities
+│   │                           │   │   ├── Client.class
+│   │                           │   │   └── Users.class
+│   │                           │   ├── mappers
+│   │                           │   │   ├── ClientMapper.class
+│   │                           │   │   └── UserMapper.class
+│   │                           │   ├── repositories
+│   │                           │   │   ├── ClientRepository.class
+│   │                           │   │   └── UserRepository.class
+│   │                           │   └── utils
+│   │                           │       └── Scopes.class
+│   │                           ├── security
+│   │                           │   └── SecureGenerator.class
+│   │                           ├── services
+│   │                           │   ├── ClientService.class
+│   │                           │   ├── impl
+│   │                           │   │   ├── ClientServiceImpl.class
+│   │                           │   │   └── UserServiceImpl.class
+│   │                           │   └── UserService.class
+│   │                           └── SpringAuthServerApplication.class
+│   ├── generated
+│   │   └── sources
+│   │       ├── annotationProcessor
+│   │       │   └── java
+│   │       │       └── main
+│   │       └── headers
+│   │           └── java
+│   │               └── main
+│   ├── resources
+│   │   └── main
+│   │       ├── application.yaml
+│   │       ├── static
+│   │       └── templates
+│   └── tmp
+│       └── compileJava
+│           ├── compileTransaction
+│           │   ├── backup-dir
+│           │   └── stash-dir
+│           │       └── ControllerAdviceHandler.class.uniqueId0
+│           └── previous-compilation-data.bin
+├── build.gradle.kts
+├── db
+│   └── auth.db
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── HELP.md
+├── project_tree.txt
+├── README.md
+├── settings.gradle.kts
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── br
+    │   │       └── com
+    │   │           └── gdev
+    │   │               └── spring_auth_server
+    │   │                   ├── config
+    │   │                   │   └── SecurityConfig.java
+    │   │                   ├── controllers
+    │   │                   │   ├── ClientController.java
+    │   │                   │   └── UsersController.java
+    │   │                   ├── infra
+    │   │                   │   ├── dto
+    │   │                   │   │   ├── ErrorFields.java
+    │   │                   │   │   └── ErrorResponse.java
+    │   │                   │   ├── exception
+    │   │                   │   │   ├── ClientNotFoundExeption.java
+    │   │                   │   │   └── UserNotFoundException.java
+    │   │                   │   └── handler
+    │   │                   │       └── ControllerAdviceHandler.java
+    │   │                   ├── model
+    │   │                   │   ├── dtos
+    │   │                   │   │   ├── ClientCreatedResponseDTO.java
+    │   │                   │   │   ├── ClientDTO.java
+    │   │                   │   │   ├── ClientResponseDTO.java
+    │   │                   │   │   ├── UserDTO.java
+    │   │                   │   │   ├── UserGetResponseDTO.java
+    │   │                   │   │   └── UserResponseDTO.java
+    │   │                   │   ├── entities
+    │   │                   │   │   ├── Client.java
+    │   │                   │   │   └── Users.java
+    │   │                   │   ├── mappers
+    │   │                   │   │   ├── ClientMapper.java
+    │   │                   │   │   └── UserMapper.java
+    │   │                   │   ├── repositories
+    │   │                   │   │   ├── ClientRepository.java
+    │   │                   │   │   └── UserRepository.java
+    │   │                   │   └── utils
+    │   │                   │       └── Scopes.java
+    │   │                   ├── security
+    │   │                   │   └── SecureGenerator.java
+    │   │                   ├── services
+    │   │                   │   ├── ClientService.java
+    │   │                   │   ├── impl
+    │   │                   │   │   ├── ClientServiceImpl.java
+    │   │                   │   │   └── UserServiceImpl.java
+    │   │                   │   └── UserService.java
+    │   │                   └── SpringAuthServerApplication.java
+    │   └── resources
+    │       ├── application.yaml
+    │       ├── static
+    │       └── templates
+    └── test
+        └── java
+            └── br
+                └── com
+                    └── gdev
+                        └── spring_auth_server
+                            └── SpringAuthServerApplicationTests.java
+
+75 directories, 69 files

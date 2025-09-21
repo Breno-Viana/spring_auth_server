@@ -1,7 +1,6 @@
 package br.com.gdev.spring_auth_server.controllers;
 
 import br.com.gdev.spring_auth_server.model.dtos.UserDTO;
-import br.com.gdev.spring_auth_server.model.dtos.UserResponseDTO;
 import br.com.gdev.spring_auth_server.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

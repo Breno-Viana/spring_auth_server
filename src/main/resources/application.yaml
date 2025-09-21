@@ -9,7 +9,5 @@ spring:
     hibernate:
       ddl-auto: create-drop
 server:
-  servlet:
-    context-path: /a
   port: 8989
 

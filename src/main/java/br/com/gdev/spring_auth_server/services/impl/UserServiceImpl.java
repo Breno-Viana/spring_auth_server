@@ -10,6 +10,7 @@ import br.com.gdev.spring_auth_server.model.repositories.UserRepository;
 import br.com.gdev.spring_auth_server.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<UserResponseDTO> register_account(UserDTO dto) {
         Users entity = mapper.toEntity(dto);
-        String hard_coded_password = dto.password();
-        entity.setPass_hash(hard_coded_password);
         Users save = repository.save(entity);
         UserResponseDTO responseDTO = mapper.toResponseDTO(save);
         return ResponseEntity.ok(responseDTO);
