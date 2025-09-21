@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: spring_auth_server
+  datasource:
+    url: jdbc:sqlite:./db/auth.db
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: create-drop
+server:
+  servlet:
+    context-path: /a
+  port: 8989
+
