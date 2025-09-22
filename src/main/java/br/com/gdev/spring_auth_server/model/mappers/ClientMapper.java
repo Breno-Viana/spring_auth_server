@@ -35,7 +35,7 @@ public class ClientMapper extends SecureGenerator {
                 entity.getClient_secret(),
                 entity.getRedirect_uri(),
                 entity.getCreate_At(),
-                String.format("http://localhost:8989/cl/g/%s", entity.getId())
+                String.format("http://localhost:8989/client/g/%s", entity.getId())
         );
     }
 

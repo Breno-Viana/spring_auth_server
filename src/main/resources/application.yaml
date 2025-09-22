@@ -8,6 +8,13 @@ spring:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
     hibernate:
       ddl-auto: create-drop
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
 server:
   port: 8989
+  address: 0.0.0.0
+storage:
+  location: upload_dir
 

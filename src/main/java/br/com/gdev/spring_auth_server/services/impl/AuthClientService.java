@@ -12,12 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ClientServiceImpl implements ClientService {
+public class AuthClientService implements ClientService {
     private final ClientRepository repository;
     private final ClientMapper mapper;
 
@@ -37,5 +38,12 @@ public class ClientServiceImpl implements ClientService {
             ClientResponseDTO response = mapper.toResponse(cl);
             return ResponseEntity.accepted().body(response);
         }).orElseThrow(() -> new ClientNotFoundExeption("client not founded"));
+    }
+
+    @Override
+    public ResponseEntity<List<ClientResponseDTO>> find_all() {
+        List<Client> all = repository.findAll();
+        List<ClientResponseDTO> list = all.stream().map(mapper::toResponse).toList();
+        return ResponseEntity.ok(list);
     }
 }

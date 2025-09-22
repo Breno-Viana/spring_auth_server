@@ -9,10 +9,10 @@ public abstract class SecureGenerator {
     private final Integer SECRET_LENGTH = 30;
 
     protected String generateClientId() {
-        String suffix = ".springauthserver";
+        String suffix = "springauthserver";
         Integer prefix = RANDOM.nextInt();
         String center = UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "");
-        return String.format("%s.%s.%s", prefix, center, suffix);
+        return String.format("%s%s.%s", prefix, center, suffix);
     }
 
     protected String generateClientSecret(){

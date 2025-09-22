@@ -15,6 +15,7 @@ import java.time.temporal.ChronoUnit;
 @RequiredArgsConstructor
 public class UserMapper {
     private final PasswordEncoder ec;
+    private final ProfileMapper mapper;
 
     public Users toEntity(UserDTO dto){
         if (dto == null) return new Users();
@@ -34,6 +35,7 @@ public class UserMapper {
         return new UserResponseDTO(
                 entity.getUsername(),
                 entity.getEmail(),
+                mapper.toDTO(entity.getProfile_photo()),
                 String.format("http://localhost:8989/usr/g/%s",entity.getId())
         );
     }

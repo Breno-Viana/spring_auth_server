@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -36,6 +37,14 @@ public class Users {
     @NotBlank(message = "email must not be blank")
     @Email
     private String email;
+
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            optional = false
+    )
+    @JoinColumn
+    private ProfilePhoto profile_photo;
 
     @NotNull
     private LocalDate birth_day;

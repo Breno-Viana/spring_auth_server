@@ -44,8 +44,7 @@ public class Client {
     private String redirect_uri;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Scopes scopes;
+    private String scopes;
 
     @CreatedDate
     private LocalDateTime create_At;

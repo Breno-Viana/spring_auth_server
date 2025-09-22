@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 public record ClientDTO (
         @NotBlank String client_name,
         @NotBlank String redirect_uri,
-        @NotNull Scopes scopes
+        @NotNull String scopes
 
 ){
 }

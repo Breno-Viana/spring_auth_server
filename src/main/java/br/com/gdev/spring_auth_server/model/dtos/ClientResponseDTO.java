@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public record ClientResponseDTO(
         String CLIENT_NAME,
         String CLIENT_ID,
-        Scopes CLIENT_SCOPE,
+        String CLIENT_SCOPE,
         String REDIRECT_URI,
         LocalDateTime CREATE_AT
 ) {

@@ -25,6 +25,7 @@ dependencies {
     implementation("org.hibernate.orm:hibernate-community-dialects:6.6.26.Final")
     implementation("org.projectlombok:lombok")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     annotationProcessor("org.projectlombok:lombok:1.18.32")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
