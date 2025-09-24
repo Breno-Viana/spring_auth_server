@@ -1,7 +1,6 @@
 package br.com.gdev.spring_auth_server.model.entities;
 
 
-import br.com.gdev.spring_auth_server.model.utils.Scopes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
 
     @Column(nullable = false)

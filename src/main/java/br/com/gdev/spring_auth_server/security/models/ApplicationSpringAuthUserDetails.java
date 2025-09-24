@@ -28,15 +28,13 @@ public class ApplicationSpringAuthUserDetails implements UserDetails,OthersUserD
         List<String> list = Arrays.asList(roles);
         return list
                 .stream()
-                .map(role ->{
-                    return new SimpleGrantedAuthority(role.trim());
-                })
+                .map(role -> new SimpleGrantedAuthority(role.trim()))
                 .toList();
     }
 
     @Override
     public String getPassword() {
-        return this.user.getPass_hash();
+        return this.user.getPassHash();
     }
 
     @Override
@@ -46,16 +44,16 @@ public class ApplicationSpringAuthUserDetails implements UserDetails,OthersUserD
 
     @Override
     public ProfilePhoto getProfilePhoto() {
-        return this.user.getProfile_photo();
+        return this.user.getProfilePhoto();
     }
 
     @Override
     public String getDbUsername() {
-        return this.user.getUsername();
+        return this.user.getUserName();
     }
 
     @Override
     public LocalDate getBirthDate() {
-        return this.user.getBirth_day();
+        return this.user.getBirthDate();
     }
 }

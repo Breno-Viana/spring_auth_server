@@ -4,7 +4,9 @@ public class SecurityUrlSettings {
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/user/login",
-            "/user/save"
+            "/user/save",
+            "/public/key",
+            "/public/key/download"
     };
 
 }

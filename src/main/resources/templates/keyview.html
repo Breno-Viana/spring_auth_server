@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chave Pública RSA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 flex items-center justify-center min-h-screen">
+<div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-2xl">
+    <h1 class="text-2xl font-bold text-center text-blue-600 mb-6">
+        🔑 Chave Pública RSA
+    </h1>
+
+    <!-- Exibe a chave -->
+    <pre class="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-x-auto whitespace-pre-wrap"
+         th:text="${publicKey}"></pre>
+
+    <div class="flex justify-center mt-6 space-x-4">
+        <!-- Botão copiar -->
+        <button onclick="navigator.clipboard.writeText(document.querySelector('pre').innerText)"
+                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+            Copiar chave
+        </button>
+
+        <!-- Botão download -->
+        <a th:href="@{public/key/download}" download="public_key.pem"
+           class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">
+            Baixar chave
+        </a>
+    </div>
+</div>
+</body>
+</html>

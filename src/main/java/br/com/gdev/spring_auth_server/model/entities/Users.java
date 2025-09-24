@@ -1,6 +1,5 @@
 package br.com.gdev.spring_auth_server.model.entities;
 
-import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -24,14 +23,14 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @NotBlank(message = "username must not no be blank")
-    private String username;
+    private String userName;
 
     @NotBlank(message = "pass must not be blank")
     @Size(min = 8, message = "pass must not be less than 8 length")
-    private String pass_hash;
+    private String passHash;
 
     @Column(unique = true)
     @NotBlank(message = "email must not be blank")
@@ -44,10 +43,10 @@ public class Users {
             optional = false
     )
     @JoinColumn
-    private ProfilePhoto profile_photo;
+    private ProfilePhoto profilePhoto;
 
     @NotNull
-    private LocalDate birth_day;
+    private LocalDate birthDate;
 
     @Column
     private String role;

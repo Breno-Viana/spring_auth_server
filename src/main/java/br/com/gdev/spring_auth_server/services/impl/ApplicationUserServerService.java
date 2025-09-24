@@ -1,6 +1,5 @@
 package br.com.gdev.spring_auth_server.services.impl;
 
-import br.com.gdev.spring_auth_server.config.KeyConfigure;
 import br.com.gdev.spring_auth_server.infra.exception.BadCredentialException;
 import br.com.gdev.spring_auth_server.infra.exception.UserNotFoundException;
 import br.com.gdev.spring_auth_server.model.dtos.*;
@@ -13,7 +12,6 @@ import br.com.gdev.spring_auth_server.services.JwtService;
 import br.com.gdev.spring_auth_server.services.StorageService;
 import br.com.gdev.spring_auth_server.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,7 +36,7 @@ public class ApplicationUserServerService implements UserService {
         Users entity = mapper.toEntity(dto,encoder);
         var stored = service.store(dto.file(), dto.email());
         ProfilePhoto profilePhoto = createProfilePhoto(stored);
-        entity.setProfile_photo(profilePhoto);
+        entity.setProfilePhoto(profilePhoto);
         Users save = repository.save(entity);
 
         UserResponseDTO responseDTO = mapper.toResponseDTO(save);
@@ -48,8 +46,7 @@ public class ApplicationUserServerService implements UserService {
 
     @Override
     public ResponseEntity<UserGetResponseDTO> find_user(String id) {
-        UUID uuid = UUID.fromString(id);
-        Optional<Users> usr_opt = repository.findById(uuid);
+        Optional<Users> usr_opt = repository.findById(id);
         return usr_opt.map(usr -> {
             UserGetResponseDTO responseDTO = mapper.toGetResponseDTO(usr);
             return ResponseEntity.accepted().body(responseDTO);
@@ -57,9 +54,9 @@ public class ApplicationUserServerService implements UserService {
     }
 
     @Override
-    public ResponseEntity<List<UserResponseDTO>> find_all() {
+    public ResponseEntity<List<UserGetResponseDTO>> find_all() {
         List<Users> all = repository.findAll();
-        List<UserResponseDTO> list = all.stream().map( mapper::toResponseDTO).toList();
+        List<UserGetResponseDTO> list = all.stream().map( mapper::toGetResponseDTO).toList();
         return ResponseEntity.ok(list);
     }
 
@@ -79,11 +76,11 @@ public class ApplicationUserServerService implements UserService {
     }
 
     @Override
-    public Token authenticate(Login login) {
+    public Token authenticate(Login auth) {
         UserDetailsService userDetailsService = new ApplicationUserDetailsServiceImpl(this);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(login.username());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(auth.username());
         String password = userDetails.getPassword();
-        if (!encoder.matches(login.password(), password))throw new BadCredentialException("bad credentials");
+        if (!encoder.matches(auth.password(), password))throw new BadCredentialException("bad credentials");
         return jwtService.generateToken(userDetails);
 
     }

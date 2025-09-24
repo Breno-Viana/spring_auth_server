@@ -18,12 +18,12 @@ public class ProfilePhoto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     private String file_name;
 
     private String file_path;
 
-    @OneToOne(mappedBy = "profile_photo")
+    @OneToOne(mappedBy = "profilePhoto")
     private Users user;
 }

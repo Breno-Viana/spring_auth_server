@@ -33,7 +33,7 @@ public class ApplicationAuthClientServerService implements ClientService {
 
     @Override
     public ResponseEntity<ClientResponseDTO> find_client(String Id) {
-        Optional<Client> client = repository.findById(UUID.fromString(Id));
+        Optional<Client> client = repository.findById(Id);
         return client.map(cl ->{
             ClientResponseDTO response = mapper.toResponse(cl);
             return ResponseEntity.accepted().body(response);

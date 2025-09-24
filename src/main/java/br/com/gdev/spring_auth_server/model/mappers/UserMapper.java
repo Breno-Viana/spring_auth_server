@@ -20,12 +20,11 @@ public class UserMapper {
         if (dto == null) return new Users();
         String hash = ec.encode(dto.password());
         Users usr = new Users();
-        usr.setUsername(dto.username());
-        usr.setBirth_day(dto.birth());
+        usr.setUserName(dto.username());
+        usr.setBirthDate(dto.birth());
         usr.setEmail(dto.email());
-        usr.setPass_hash(hash);
+        usr.setPassHash(hash);
         usr.setRole(dto.role() == null?"READ_ONLY":formar_roles(dto.role()));
-        System.out.println(dto.role());
         return usr;
     }
 
@@ -34,21 +33,21 @@ public class UserMapper {
         if (entity == null) return null;
 
         return new UserResponseDTO(
-                entity.getUsername(),
+                entity.getUserName(),
                 entity.getEmail(),
-                mapper.toDTO(entity.getProfile_photo()),
-                String.format("http://localhost:8989/usr/g/%s",entity.getId())
+                mapper.toDTO(entity.getProfilePhoto()),
+                String.format("http://localhost:8989/user/search/?id=%s",entity.getId())
         );
     }
 
 
     public UserGetResponseDTO toGetResponseDTO(Users entity){
         if (entity == null) return null;
-        Long age = cal_age(entity.getBirth_day());
+        Long age = cal_age(entity.getBirthDate());
         return new UserGetResponseDTO(
-                entity.getUsername(),
+                entity.getUserName(),
                 entity.getEmail(),
-                entity.getBirth_day(),
+                entity.getBirthDate(),
                 age,
                 entity.getCreate_at()
         );

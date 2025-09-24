@@ -16,7 +16,7 @@ server:
   port: 8989
   address: 0.0.0.0
 storage:
-  location: src/main/resources/profiles-photos
+  location: profiles-photos
 key:
   private_key: classpath:keys/private.pem
   public_key: classpath:keys/public.pem

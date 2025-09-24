@@ -25,7 +25,7 @@ dependencies {
     implementation("org.hibernate.orm:hibernate-community-dialects:6.6.26.Final")
     implementation("org.projectlombok:lombok")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
-//    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("io.hypersistence:hypersistence-utils-hibernate-63:3.8.3")
     implementation("com.auth0:java-jwt:3.3.0")
     annotationProcessor("org.projectlombok:lombok:1.18.32")

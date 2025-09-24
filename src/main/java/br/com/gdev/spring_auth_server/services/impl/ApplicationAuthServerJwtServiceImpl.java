@@ -1,6 +1,7 @@
 package br.com.gdev.spring_auth_server.services.impl;
 
 import br.com.gdev.spring_auth_server.config.KeyConfigure;
+import br.com.gdev.spring_auth_server.infra.exception.TokenNotFoundException;
 import br.com.gdev.spring_auth_server.model.dtos.Subject;
 import br.com.gdev.spring_auth_server.model.dtos.Token;
 import br.com.gdev.spring_auth_server.security.models.ApplicationSpringAuthUserDetails;
@@ -12,11 +13,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.time.*;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 import java.util.Date;
@@ -37,7 +46,7 @@ public class ApplicationAuthServerJwtServiceImpl implements JwtService {
             Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
             Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
             List<String> list = authorities.stream().map(GrantedAuthority::getAuthority).toList();
-            System.out.println("AUTHORITIES: "+list);
+            System.out.printf("AUTHORITIES OF %s: %s%n",user.getDbUsername(), list);
             String[] array = list.toArray(new String[0]);
             token = JWT.create()
                     .withIssuer(ISSUER)
@@ -66,8 +75,13 @@ public class ApplicationAuthServerJwtServiceImpl implements JwtService {
 
           return new Subject(subject);
       }catch (Exception e){
-          throw new RuntimeException("invalid or expired token");
+          throw new TokenNotFoundException("invalid or expired token");
       }
+    }
+
+    @Override
+    public String publicKey(){
+        return keyConfigure.getPublic_key_content();
     }
 
 
@@ -83,7 +97,7 @@ public class ApplicationAuthServerJwtServiceImpl implements JwtService {
     }
 
     private Date expirationDate() {
-        return (Date) Date.from(ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).plusHours(4).toInstant());
+        return (Date) Date.from(ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).plusHours(1).toInstant());
     }
 
 }

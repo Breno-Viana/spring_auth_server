@@ -3,6 +3,7 @@ package br.com.gdev.spring_auth_server.infra.handler;
 import br.com.gdev.spring_auth_server.infra.dto.ErrorFields;
 import br.com.gdev.spring_auth_server.infra.dto.ErrorResponse;
 import br.com.gdev.spring_auth_server.infra.exception.ClientNotFoundExeption;
+import br.com.gdev.spring_auth_server.infra.exception.TokenNotFoundException;
 import br.com.gdev.spring_auth_server.infra.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -85,6 +86,17 @@ public class ControllerAdviceHandler {
                 ex.getMessage(),
                 LocalDateTime.now(),
                 403,
+                List.of()
+        );
+    }
+
+    @ExceptionHandler(TokenNotFoundException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse tokenErrorExceptionHandler(TokenNotFoundException ex){
+        return new ErrorResponse(
+                ex.getMessage(),
+                LocalDateTime.now(),
+                401,
                 List.of()
         );
     }
