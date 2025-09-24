@@ -1,4 +1,4 @@
-package br.com.gdev.spring_auth_server.security;
+package br.com.gdev.spring_auth_server.security.utils;
 
 import java.security.SecureRandom;
 import java.util.UUID;

@@ -1,6 +1,7 @@
 package br.com.gdev.spring_auth_server;
 
 
+import br.com.gdev.spring_auth_server.config.KeyConfigure;
 import br.com.gdev.spring_auth_server.services.StorageService;
 import br.com.gdev.spring_auth_server.config.StoragePropertiesConfig;
 import org.springframework.boot.CommandLineRunner;
@@ -13,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@EnableConfigurationProperties(StoragePropertiesConfig.class)
+@EnableConfigurationProperties({StoragePropertiesConfig.class, KeyConfigure.class})
 public class SpringAuthServerApplication {
 
     public static void main(String[] args) {
@@ -27,6 +28,7 @@ public class SpringAuthServerApplication {
     @Bean
     CommandLineRunner init(StorageService service){
         return (args) -> {
+
             service.deleteAll();
             service.init();
         };

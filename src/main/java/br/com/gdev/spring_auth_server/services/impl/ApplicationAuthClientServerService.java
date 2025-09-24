@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AuthClientService implements ClientService {
+public class ApplicationAuthClientServerService implements ClientService {
     private final ClientRepository repository;
     private final ClientMapper mapper;
 

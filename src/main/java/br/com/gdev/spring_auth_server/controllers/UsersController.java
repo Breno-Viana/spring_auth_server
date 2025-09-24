@@ -1,7 +1,10 @@
 package br.com.gdev.spring_auth_server.controllers;
 
+import br.com.gdev.spring_auth_server.model.dtos.Login;
+import br.com.gdev.spring_auth_server.model.dtos.Token;
 import br.com.gdev.spring_auth_server.model.dtos.UserDTO;
 import br.com.gdev.spring_auth_server.model.dtos.UserResponseDTO;
+import br.com.gdev.spring_auth_server.model.entities.Users;
 import br.com.gdev.spring_auth_server.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,13 @@ public class UsersController {
     public ResponseEntity<List<UserResponseDTO>> find_all(){
         return service.find_all();
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<Token> login(@RequestBody Login login){
+        Token authenticate = service.authenticate(login);
+        return ResponseEntity.ok(authenticate);
+    }
+
 
 
 }

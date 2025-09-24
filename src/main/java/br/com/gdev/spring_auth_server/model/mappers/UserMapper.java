@@ -14,10 +14,9 @@ import java.time.temporal.ChronoUnit;
 @Component
 @RequiredArgsConstructor
 public class UserMapper {
-    private final PasswordEncoder ec;
     private final ProfileMapper mapper;
 
-    public Users toEntity(UserDTO dto){
+    public Users toEntity(UserDTO dto, PasswordEncoder ec){
         if (dto == null) return new Users();
         String hash = ec.encode(dto.password());
         Users usr = new Users();
@@ -25,6 +24,8 @@ public class UserMapper {
         usr.setBirth_day(dto.birth());
         usr.setEmail(dto.email());
         usr.setPass_hash(hash);
+        usr.setRole(dto.role() == null?"READ_ONLY":formar_roles(dto.role()));
+        System.out.println(dto.role());
         return usr;
     }
 
@@ -53,9 +54,11 @@ public class UserMapper {
         );
     }
 
-
     private Long cal_age(LocalDate localDate){
-
         return ChronoUnit.YEARS.between(localDate, LocalDate.now());
+    }
+
+    private String formar_roles(String roles){
+        return roles.trim().toUpperCase();
     }
 }

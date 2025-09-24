@@ -1,5 +1,6 @@
 package br.com.gdev.spring_auth_server.model.entities;
 
+import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,12 +10,11 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "USERS")
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,6 +48,9 @@ public class Users {
 
     @NotNull
     private LocalDate birth_day;
+
+    @Column
+    private String role;
 
     @Column
     @NotNull

@@ -1,12 +1,12 @@
 package br.com.gdev.spring_auth_server.services;
 
-import br.com.gdev.spring_auth_server.model.dtos.UserDTO;
-import br.com.gdev.spring_auth_server.model.dtos.UserGetResponseDTO;
-import br.com.gdev.spring_auth_server.model.dtos.UserResponseDTO;
+import br.com.gdev.spring_auth_server.model.dtos.*;
+import br.com.gdev.spring_auth_server.model.entities.Users;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
@@ -14,6 +14,10 @@ public interface UserService {
 
     ResponseEntity<UserGetResponseDTO> find_user(String id);
 
-
     ResponseEntity<List<UserResponseDTO>> find_all();
+
+    Users getUserByEmail(String email);
+
+    Token authenticate(Login login);
+
 }

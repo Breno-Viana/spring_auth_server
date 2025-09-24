@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -73,6 +74,17 @@ public class ControllerAdviceHandler {
                 ex.getMessage(),
                 LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
+                List.of()
+        );
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse accessDeniedExceptionHandler(AccessDeniedException ex){
+        return new ErrorResponse(
+                ex.getMessage(),
+                LocalDateTime.now(),
+                403,
                 List.of()
         );
     }

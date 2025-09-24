@@ -4,12 +4,8 @@ import br.com.gdev.spring_auth_server.model.dtos.ClientCreatedResponseDTO;
 import br.com.gdev.spring_auth_server.model.dtos.ClientDTO;
 import br.com.gdev.spring_auth_server.model.dtos.ClientResponseDTO;
 import br.com.gdev.spring_auth_server.model.entities.Client;
-import br.com.gdev.spring_auth_server.model.repositories.ClientRepository;
-import br.com.gdev.spring_auth_server.security.SecureGenerator;
+import br.com.gdev.spring_auth_server.security.utils.SecureGenerator;
 import org.springframework.stereotype.Component;
-
-import java.security.SecureRandom;
-import java.util.UUID;
 
 @Component
 public class ClientMapper extends SecureGenerator {
