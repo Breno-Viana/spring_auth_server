@@ -3,7 +3,7 @@ package br.com.gdev.spring_auth_server.model.mappers;
 import br.com.gdev.spring_auth_server.model.dtos.UserDTO;
 import br.com.gdev.spring_auth_server.model.dtos.UserGetResponseDTO;
 import br.com.gdev.spring_auth_server.model.dtos.UserResponseDTO;
-import br.com.gdev.spring_auth_server.model.entities.Users;
+import br.com.gdev.spring_auth_server.model.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class UserMapper {
         usr.setBirthDate(dto.birth());
         usr.setEmail(dto.email());
         usr.setPassHash(hash);
-        usr.setRole(dto.role() == null?"READ_ONLY":formar_roles(dto.role()));
+        usr.setRole("READER");
         return usr;
     }
 

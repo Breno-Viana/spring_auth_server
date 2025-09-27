@@ -3,9 +3,10 @@ package br.com.gdev.spring_auth_server.security.filter;
 import br.com.gdev.spring_auth_server.infra.exception.TokenNotFoundException;
 import br.com.gdev.spring_auth_server.model.dtos.Subject;
 import br.com.gdev.spring_auth_server.model.dtos.Token;
-import br.com.gdev.spring_auth_server.model.entities.Users;
+import br.com.gdev.spring_auth_server.model.Users;
 import br.com.gdev.spring_auth_server.model.repositories.UserRepository;
-import br.com.gdev.spring_auth_server.security.models.ApplicationSpringAuthUserDetails;
+import br.com.gdev.spring_auth_server.security.ApplicationSpringAuthUserDetails;
+import br.com.gdev.spring_auth_server.security.utils.SecurityInformationGetter;
 import br.com.gdev.spring_auth_server.security.utils.SecurityUrlSettings;
 import br.com.gdev.spring_auth_server.services.JwtService;
 import jakarta.servlet.FilterChain;
@@ -25,7 +26,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserAuthenticationFilter extends OncePerRequestFilter {
+public class UserAuthenticationFilter extends OncePerRequestFilter implements SecurityInformationGetter {
     private final UserRepository repository;
     private final JwtService service;
 
@@ -39,8 +40,9 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
         if (checkIfEndpointIsNotPublic(request)){
             String token = recoveryBearerToken(request);
 
-            if (token != null){
-                Subject subject = service.getSubject(new Token(token));
+            System.out.println("IS VALID ==>  "+service.checkCode(token));
+            if (token != null&&service.checkCode(token)){
+                Subject subject = service.getSubject(new Token(null,token));
                 Optional<Users> byEmail = repository.findByEmail(subject.subject());
 
                 if (byEmail.isPresent()){
@@ -56,17 +58,6 @@ public class UserAuthenticationFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request,response);
-    }
-
-
-    private String recoveryBearerToken(HttpServletRequest request){
-        String authentication = request.getHeader("Authorization");
-        if (authentication == null){
-            return null;
-        }
-
-        return authentication.replace("Bearer ", "");
-
     }
 
     private boolean checkIfEndpointIsNotPublic(HttpServletRequest request){

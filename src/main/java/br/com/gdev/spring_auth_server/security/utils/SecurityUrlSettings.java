@@ -5,8 +5,13 @@ public class SecurityUrlSettings {
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
             "/user/login",
             "/user/save",
-            "/public/key",
-            "/public/key/download"
+            "/public/key"
+    };
+
+    public static final String[] ENDPOINTS_OF_OWNERS = {
+            "/client/save",
+            "/client/search",
+            "/client/delete"
     };
 
 }

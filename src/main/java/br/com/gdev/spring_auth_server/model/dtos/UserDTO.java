@@ -13,8 +13,7 @@ public record UserDTO(
         @NotBlank(message = "password must not be blank") @Size(min = 8, message = "pass must not be less then 8 length") String password,
         @NotBlank(message = "email must not be blank") @Email String email,
         @NotNull(message = "birth must not be null") LocalDate birth,
-        MultipartFile file,
-        String role
+        MultipartFile file
 
 ) {
 }

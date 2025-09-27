@@ -1,8 +1,7 @@
 package br.com.gdev.spring_auth_server.security;
 
 import br.com.gdev.spring_auth_server.infra.exception.BadCredentialException;
-import br.com.gdev.spring_auth_server.model.entities.Users;
-import br.com.gdev.spring_auth_server.security.models.ApplicationSpringAuthUserDetails;
+import br.com.gdev.spring_auth_server.model.Users;
 import br.com.gdev.spring_auth_server.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

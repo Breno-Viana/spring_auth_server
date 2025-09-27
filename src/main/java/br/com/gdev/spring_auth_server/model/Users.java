@@ -1,17 +1,19 @@
-package br.com.gdev.spring_auth_server.model.entities;
+package br.com.gdev.spring_auth_server.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity(name = "USERS")
 @Table
@@ -19,6 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode
 public class Users {
 
     @Id
@@ -40,9 +43,9 @@ public class Users {
     @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
-            optional = false
+            optional = true
     )
-    @JoinColumn
+    @JoinColumn(nullable = true)
     private ProfilePhoto profilePhoto;
 
     @NotNull
@@ -55,4 +58,7 @@ public class Users {
     @NotNull
     @CreatedDate
     private LocalDateTime create_at;
+
+
+
 }

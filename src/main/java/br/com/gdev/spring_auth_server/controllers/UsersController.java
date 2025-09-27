@@ -5,6 +5,7 @@ import br.com.gdev.spring_auth_server.model.dtos.Token;
 import br.com.gdev.spring_auth_server.model.dtos.UserDTO;
 import br.com.gdev.spring_auth_server.model.dtos.UserGetResponseDTO;
 import br.com.gdev.spring_auth_server.services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +22,18 @@ public class UsersController {
 
     @PostMapping(value = "/save", consumes = {"multipart/form-data"})
     public ResponseEntity<?> register_account(@Valid @ModelAttribute UserDTO dto){
-        return service.register_account(dto);
+        return service.registerAccount(dto);
     }
 
 
     @GetMapping("/search")
     public ResponseEntity<?> find_user(@RequestParam String id){
-        return service.find_user(id);
+        return service.findUser(id);
     }
 
     @GetMapping("/ls")
     public ResponseEntity<List<UserGetResponseDTO>> find_all(){
-        return service.find_all();
+        return service.findAll();
     }
 
     @PostMapping(value = "/login", consumes = "multipart/form-data")
@@ -41,6 +42,19 @@ public class UsersController {
         return ResponseEntity.ok(authenticate);
     }
 
+    @DeleteMapping("/delete")
+    @ResponseBody
+    public ResponseEntity<Void> delete_user(
+            @RequestParam(value = "id", required = false) String id,
+            @RequestParam(value = "email", required = false) String email){
+//        System.out.println("EMAIL AND ID: "+email+"  "+id);
+        return service.deleteUser(id, email);
+    }
 
+
+    @PutMapping("/.own/turn")
+    public ResponseEntity<?> getOwn(HttpServletRequest request){
+        return service.getOwn(request);
+    }
 
 }

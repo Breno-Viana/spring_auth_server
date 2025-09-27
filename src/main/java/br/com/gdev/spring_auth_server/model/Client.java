@@ -1,4 +1,4 @@
-package br.com.gdev.spring_auth_server.model.entities;
+package br.com.gdev.spring_auth_server.model;
 
 
 import jakarta.persistence.*;
@@ -6,12 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
-
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Table
 @Entity
@@ -47,4 +45,11 @@ public class Client {
 
     @CreatedDate
     private LocalDateTime create_At;
+
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
+    @JoinColumn
+    private Users owner;
 }

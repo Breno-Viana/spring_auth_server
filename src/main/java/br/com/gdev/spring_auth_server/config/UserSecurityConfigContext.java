@@ -9,6 +9,10 @@ import br.com.gdev.spring_auth_server.services.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,7 +41,9 @@ public class UserSecurityConfigContext {
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authorizeHttpRequests(authorize -> {
            authorize.requestMatchers(SecurityUrlSettings.ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll();
-           authorize.anyRequest().hasRole("WRITER");
+           authorize.requestMatchers(SecurityUrlSettings.ENDPOINTS_OF_OWNERS).hasRole("OWNER");
+           authorize.requestMatchers(HttpMethod.PUT, "/user/.own/turn").authenticated();
+           authorize.anyRequest().hasRole("ADMIN");
         });
         http.addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.exceptionHandling(ex -> {
@@ -69,5 +75,19 @@ public class UserSecurityConfigContext {
     }
 
 
+    @Bean
+    public RoleHierarchy roleHierarchy(){
+        return RoleHierarchyImpl.withRolePrefix("")
+                .role("ADMIN").implies("OWN")
+                .role("OWN").implies("READER")
+                .build();
+    }
+
+    @Bean
+    public DefaultMethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+        var handler = new DefaultMethodSecurityExpressionHandler();
+        handler.setRoleHierarchy(roleHierarchy);
+        return handler;
+    }
 
 }

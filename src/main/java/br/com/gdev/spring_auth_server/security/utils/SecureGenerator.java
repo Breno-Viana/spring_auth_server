@@ -6,7 +6,6 @@ import java.util.UUID;
 public abstract class SecureGenerator {
     private final SecureRandom RANDOM = new SecureRandom();
     private final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private final Integer SECRET_LENGTH = 30;
 
     protected String generateClientId() {
         String suffix = "springauthserver";
@@ -17,9 +16,21 @@ public abstract class SecureGenerator {
 
     protected String generateClientSecret(){
         StringBuilder sb = new StringBuilder("GDEVAUTH-");
-        for (int index = 0; index <SECRET_LENGTH ; index++) {
+        int SECRET_LENGTH = 30;
+        for (int index = 0; index < SECRET_LENGTH; index++) {
             sb.append(CHARS.charAt(RANDOM.nextInt(CHARS.length())));
         }
         return sb.toString();
+    }
+
+    protected String genTokenCode(){
+        StringBuilder sb = new StringBuilder();
+        int CODE_LENGTH = 10;
+        for (int index = 0; index < CODE_LENGTH; index++){
+            sb.append(CHARS.charAt(RANDOM.nextInt(CHARS.length())));
+        }
+
+        return sb.toString();
+
     }
 }

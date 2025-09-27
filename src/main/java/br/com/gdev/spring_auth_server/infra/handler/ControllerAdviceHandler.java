@@ -2,6 +2,7 @@ package br.com.gdev.spring_auth_server.infra.handler;
 
 import br.com.gdev.spring_auth_server.infra.dto.ErrorFields;
 import br.com.gdev.spring_auth_server.infra.dto.ErrorResponse;
+import br.com.gdev.spring_auth_server.infra.exception.AlreadyOwnerException;
 import br.com.gdev.spring_auth_server.infra.exception.ClientNotFoundExeption;
 import br.com.gdev.spring_auth_server.infra.exception.TokenNotFoundException;
 import br.com.gdev.spring_auth_server.infra.exception.UserNotFoundException;
@@ -99,6 +100,12 @@ public class ControllerAdviceHandler {
                 401,
                 List.of()
         );
+    }
+
+    @ExceptionHandler(AlreadyOwnerException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse alreadyOwnerExceptionHandler(AlreadyOwnerException e){
+        return new ErrorResponse(e.getMessage(), LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(), List.of());
     }
 
 }

@@ -1,31 +1,39 @@
 package br.com.gdev.spring_auth_server.services.impl;
 
 import br.com.gdev.spring_auth_server.infra.exception.ClientNotFoundExeption;
-import br.com.gdev.spring_auth_server.model.dtos.ClientCreatedResponseDTO;
-import br.com.gdev.spring_auth_server.model.dtos.ClientDTO;
-import br.com.gdev.spring_auth_server.model.dtos.ClientResponseDTO;
-import br.com.gdev.spring_auth_server.model.entities.Client;
+import br.com.gdev.spring_auth_server.infra.exception.UserNotFoundException;
+import br.com.gdev.spring_auth_server.infra.exception.YouAreNotTheOwnerException;
+import br.com.gdev.spring_auth_server.model.Users;
+import br.com.gdev.spring_auth_server.model.dtos.*;
+import br.com.gdev.spring_auth_server.model.Client;
 import br.com.gdev.spring_auth_server.model.mappers.ClientMapper;
 import br.com.gdev.spring_auth_server.model.repositories.ClientRepository;
+import br.com.gdev.spring_auth_server.model.repositories.UserRepository;
+import br.com.gdev.spring_auth_server.security.utils.SecurityInformationGetter;
 import br.com.gdev.spring_auth_server.services.ClientService;
+import br.com.gdev.spring_auth_server.services.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ApplicationAuthClientServerService implements ClientService {
+public class ApplicationAuthClientServerService implements ClientService, SecurityInformationGetter {
     private final ClientRepository repository;
     private final ClientMapper mapper;
-
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Override
-    public ResponseEntity<ClientCreatedResponseDTO> register_client(ClientDTO dto) {
-        Client entity = mapper.toEntity(dto);
+    public ResponseEntity<ClientCreatedResponseDTO> register_client(ClientDTO dto, HttpServletRequest request) {
+        String token = recoveryBearerToken(request);
+        Subject subject = jwtService.getSubject(new Token(null, token));
+        Users owner = userRepository.findByEmail(subject.subject()).orElseThrow(()-> new UserNotFoundException("User not found"));
+        Client entity = mapper.toEntity(dto, owner);
         Client save = repository.save(entity);
         ClientCreatedResponseDTO createdResponse = mapper.toCreatedResponse(save);
         return ResponseEntity.ok(createdResponse);
@@ -45,5 +53,25 @@ public class ApplicationAuthClientServerService implements ClientService {
         List<Client> all = repository.findAll();
         List<ClientResponseDTO> list = all.stream().map(mapper::toResponse).toList();
         return ResponseEntity.ok(list);
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(String id, HttpServletRequest request) {
+        String token = recoveryBearerToken(request);
+        Subject subject = jwtService.getSubject(new Token(null, token));
+        Optional<Client> client = repository.findById(id);
+        Optional<Users> user = userRepository.findByEmail(subject.subject());
+
+        client.ifPresent(cl -> {
+            user.ifPresent(us ->{
+                if (cl.getOwner().equals(us)){
+                    repository.delete(cl);
+                }else {
+                    throw new YouAreNotTheOwnerException("you're not the owner");
+                }
+            });
+        });
+
+        return ResponseEntity.noContent().build();
     }
 }

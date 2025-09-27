@@ -1,7 +1,8 @@
-package br.com.gdev.spring_auth_server.security.models;
+package br.com.gdev.spring_auth_server.security;
 
-import br.com.gdev.spring_auth_server.model.entities.ProfilePhoto;
-import br.com.gdev.spring_auth_server.model.entities.Users;
+import br.com.gdev.spring_auth_server.model.ProfilePhoto;
+import br.com.gdev.spring_auth_server.model.Users;
+import br.com.gdev.spring_auth_server.security.utils.OthersUserDetails;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-public class ApplicationSpringAuthUserDetails implements UserDetails,OthersUserDetails {
+public class ApplicationSpringAuthUserDetails implements UserDetails, OthersUserDetails {
 
     private final Users user;
 
@@ -56,4 +57,11 @@ public class ApplicationSpringAuthUserDetails implements UserDetails,OthersUserD
     public LocalDate getBirthDate() {
         return this.user.getBirthDate();
     }
+
+    @Override
+    public Users getPrincipal() {
+        return this.user;
+    }
+
+
 }

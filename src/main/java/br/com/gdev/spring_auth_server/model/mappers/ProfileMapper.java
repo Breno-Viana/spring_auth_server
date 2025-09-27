@@ -1,7 +1,7 @@
 package br.com.gdev.spring_auth_server.model.mappers;
 
 import br.com.gdev.spring_auth_server.model.dtos.ProfilePhotoDTO;
-import br.com.gdev.spring_auth_server.model.entities.ProfilePhoto;
+import br.com.gdev.spring_auth_server.model.ProfilePhoto;
 import org.springframework.stereotype.Component;
 
 @Component
